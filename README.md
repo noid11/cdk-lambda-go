@@ -7,7 +7,7 @@
 ### build
 
 ```zsh
-# lambda functio build
+# lambda function build
 cd lambda; GOOS=linux go build -o bin/main
 
 # project build
