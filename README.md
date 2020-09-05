@@ -1,14 +1,22 @@
-# Welcome to your CDK TypeScript project!
+# CDK Lambda GO
 
-This is a blank project for TypeScript development with CDK.
-
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+- CDK App that deploy golang Lambda Function 
 
 ## Useful commands
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+### build
+
+```zsh
+# lambda functio build
+cd lambda; GOOS=linux go build -o bin/main
+
+# project build
+npm run build
+```
+
+### Lambda Function Local invoke
+
+```zsh
+cdk synth --no-staging > template.yaml
+sam local invoke MyFuncHandlerXXX -e lambda/sample-event.json
+```
