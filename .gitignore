@@ -9,3 +9,9 @@ cdk.out
 
 # Parcel default cache directory
 .parcel-cache
+
+# cdk synth for sam local invoke
+template.yaml
+
+# golang binary
+lambda/bin/main
