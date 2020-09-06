@@ -23,8 +23,8 @@ var sess = session.Must(session.NewSessionWithOptions(session.Options{
 	SharedConfigState: session.SharedConfigEnable,
 }))
 
-var lambdaClient = lambda.New(sess)
-var ec2Client = ec2.New(sess)
+var lambdaSvc = lambda.New(sess)
+var ec2Svc = ec2.New(sess)
 
 func init() {
 	xray.Configure(xray.Config{
@@ -33,13 +33,13 @@ func init() {
 
 	xray.SetLogger(xraylog.NewDefaultLogger(os.Stdout, xraylog.LogLevelDebug))
 
-	xray.AWS(lambdaClient.Client)
-	xray.AWS(ec2Client.Client)
+	xray.AWS(lambdaSvc.Client)
+	xray.AWS(ec2Svc.Client)
 }
 
 func callLambda(ctx context.Context) (string, error) {
 	input := &lambda.GetAccountSettingsInput{}
-	req, err := lambdaClient.GetAccountSettingsWithContext(ctx, input)
+	req, err := lambdaSvc.GetAccountSettingsWithContext(ctx, input)
 	if err != nil {
 		log.Print(err.Error())
 	}
@@ -48,7 +48,7 @@ func callLambda(ctx context.Context) (string, error) {
 }
 
 func callEc2(ctx context.Context) (string, error) {
-	req, err := ec2Client.DescribeRegionsWithContext(ctx, nil)
+	req, err := ec2Svc.DescribeRegionsWithContext(ctx, nil)
 	if err != nil {
 		log.Print(err.Error())
 	}
